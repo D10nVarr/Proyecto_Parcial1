@@ -29,10 +29,16 @@ for i in range(num_encuesta):
     nombre=input("Ingrese el nombre de la encuesta: ")
     ##Pruebas de compatibilidad/posible forma de manejar el ingreso de datos
     cantidad=int(input("Ingrese la cantidad de preguntas a ingresar: "))
+
     for i in range(cantidad):
         variable=input(f"Ingrese la pregunta {i+1}: ")
         respuesta.agregar_question(variable)
     encuestas[nombre]=respuesta
+
+escojer=input("Escoja una encuesta")
+
+for i in encuestas:
+    print(f"{i}: {encuestas[i]}")
 
 
 for (nombre,valor) in encuestas.items():
