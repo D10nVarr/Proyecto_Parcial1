@@ -1,66 +1,75 @@
+encuestas={}
+
 class CreateSurvey:
-    def __init__(self):
+    def __init__(self, nombre):
+        self.nombre = nombre
         self.questionList =[]
 
     def agregar_question(self, question):
         self.questionList.append(question)
 
-class register_request(CreateSurvey):
-    def __init__(self):
-        super().__init__()
+class registerRequest(CreateSurvey): #(CreateSurvey)
+    def __init__(self, nombre):
+        super().__init__(nombre)
         self.respuestas={}
 
     def registrar_respuestas(self):
-        if not self.questionList:
-            raise ValueError("No hay preguntas registradas aún.")
-        for i, pregunta in enumerate (self.questionList, start=1):
-            respuesta= input(f"{i}. {pregunta}: ").strip()
-            if not respuesta:
-                print("Se registrara como 'Sin respuesta'.")
-                respuesta = "Sin respuesta"
+        print(f"Encuesta {self.nombre}")
+
+        for i, pregunta in enumerate(self.questionList, start=1):
+            respuesta=input(f"{i}. {pregunta}: ")
             self.respuestas[pregunta] = respuesta
-        print("Respuestas registradas correctamente")
 
     def mostrar_respuestas(self):
-        if not self.respuestas:
-            print("No hay respuestas registradas todavia.")
-            return
-        for i, (pregunta,valor) in enumerate(self.respuestas.items(), start=1):
+        for i, (pregunta, valor) in enumerate(self.respuestas.items(), start=1):
             print(f"Pregunta {i}: {pregunta}")
             print(f"Respuesta: {valor}\n")
-encuestas={}
 
-num_encuesta=int(input("Ingrese el numero de encuestas: "))
+while True:
+    print("\nBienvenido al sistema de Encuestas Dinámicas")
+    print("1. Crear una encuesta")
+    print("2. Responder una encuesta")
+    print("3. Mostrar respuestas de la encuesta a escojer")
+    print("4. Salir")
 
+    option=input("Seleccione una opciones: ")
 
-for i in range(num_encuesta):
-    nombre=input("Ingrese el nombre de la encuesta: ")
-    ##Pruebas de compatibilidad/posible forma de manejar el ingreso de datos
-    while True:
-        try:
-            cantidad =int(input("Ingrese la cantidad de preguntas a ingresar: "))
-            if cantidad <=0:
-                print("Debe ingresar un numero mayor a 0.")
-                continue
-            break
-        except ValueError:
-            print("Por favor ingrese un numero valido.")
-    respuesta = register_request()
+    match option:
+        case "1":
+            num_encuesta=int(input("Ingrese el numero de encuestas: "))
 
-    for i in range(cantidad):
-        variable=input(f"Ingrese la pregunta {i+1}: ")
-        respuesta.agregar_question(variable)
+            for i in range(num_encuesta):
+                nombre = input("Ingrese el nombre de la encuesta: ").lower()
+                cantidad = int(input("Ingrese la cantidad de preguntas a ingresar: "))
 
-    encuestas[nombre]=respuesta
-escojer = input("Escoja una encuesta: ")
-if escojer in encuestas:
-    encuestas[escojer].registrar_respuestas()
-else:
-    print("La encuesta no existe.")
+                encuesta = registerRequest(nombre)
 
-for nombre,valor in encuestas.items():
-    print(f"\nEncuestas: {nombre}")
-    valor.mostrar_respuestas()
+                for i in range(cantidad):
+                    variable = input(f"Ingrese la pregunta {i + 1}: ")
+                    encuesta.agregar_question(variable)
 
-respuesta.registrar_respuestas()
-respuesta.mostrar_respuestas()
+                encuestas[nombre] = encuesta
+            print("Encuestas registradas")
+
+        case "2":
+            escojer=input("Ingrese el nombre de la encuesta que desee responder: ").lower()
+
+            encuestas[escojer].registrar_respuestas()
+
+        case "3":
+            if not encuestas:
+                print("No hay encuestas registradas.")
+            else:
+                print("Encuestas disponibles:")
+                for nombre in encuestas:  # directamente recorre las claves
+                    print(f"- {nombre}")
+                nombre_elegido = input("Ingrese el nombre de la encuesta que desea ver: ").lower()
+                if nombre_elegido in encuestas:
+                    encuestas[nombre_elegido].mostrar_respuestas()
+                else:
+                    print("Encuesta no encontrada.")
+        case "4":
+            print("Saliendo...")
+
+        case _:
+            print("Opción no válida")
