@@ -42,5 +42,6 @@ while True:
 
 
 
+
 respuesta.registrar_repuestas()
 respuesta.mostrar_respuestas()
