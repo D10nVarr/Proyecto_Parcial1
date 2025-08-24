@@ -20,11 +20,11 @@ class register_request(CreateSurvey): #(CreateSurvey)
             print(f"Pregunta {i}: {valor}")
 
 
-
-
 ##Pruebas de compatibilidad/posible forma de manejar el ingreso de datos
+cantidad=int(input("Ingrese la cantidad de preguntas a ingresar: "))
+
 respuesta = register_request()#Instanciamiento de objeto, donde se toma tanto la lista de preguntas como de respuestas
-for i in range(3):
+for i in range(cantidad):
     si=input(f"Ingrese el pregunta {i+1}: ")
     respuesta.agregar_question(si)
 
