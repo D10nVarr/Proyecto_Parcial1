@@ -1,3 +1,5 @@
+encuestas={}
+
 class CreateSurvey:
     def __init__(self):
         self.questionList =[]
@@ -10,24 +12,33 @@ class register_request(CreateSurvey): #(CreateSurvey)
         super().__init__()
         self.respuestas={}
 
-    def registrar_repuestas(self):
-        for i, pregunta in enumerate(self.questionList, start=1):
-            respuesta=input(f"{i}. {pregunta}: ")
-            self.respuestas[pregunta] = respuesta
+    def registrar_respuestas(self):
+        for i, value in enumerate(encuestas.items(), start=1):
+            print(f"Encuentas #{i}. {value[0]}")
+
+        escojer = input("Escoja una encuesta por su nombre: ").lower()
+
+        if escojer in encuestas:
+            for i, pregunta in enumerate(self.questionList, start=1):
+                respuesta=input(f"{i}. {pregunta}: ")
+                self.respuestas[pregunta] = respuesta
+            encuestas[escojer]=self.respuestas
+
+        else:
+            print("La encuesta no existe.")
 
     def mostrar_respuestas(self):
         for i, (pregunta, valor) in enumerate(self.respuestas.items(), start=1):
             print(f"Pregunta {i}: {pregunta}")
             print(f"Respuesta: {valor}\n")
 
-encuestas={}
+
 
 num_encuesta=int(input("Ingrese el numero de encuestas: "))
 respuesta = register_request()#Instanciamiento de objeto, donde se toma tanto la lista de preguntas como de respuestas
 
 for i in range(num_encuesta):
-    nombre=input("Ingrese el nombre de la encuesta: ")
-    ##Pruebas de compatibilidad/posible forma de manejar el ingreso de datos
+    nombre=input("Ingrese el nombre de la encuesta: ").lower()
     cantidad=int(input("Ingrese la cantidad de preguntas a ingresar: "))
 
     for i in range(cantidad):
@@ -35,11 +46,9 @@ for i in range(num_encuesta):
         respuesta.agregar_question(variable)
     encuestas[nombre]=respuesta
 
-escojer=input("Escoja una encuesta")
-
-for i in encuestas:
-    print(f"{i}: {encuestas[i]}")
+respuesta.registrar_respuestas()
 
 
-for (nombre,valor) in encuestas.items():
-    print(f"Encuesta {nombre}: {valor.mostrar_respuestas()}")
+
+
+
