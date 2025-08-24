@@ -16,17 +16,24 @@ class register_request(CreateSurvey): #(CreateSurvey)
             self.respuestas[pregunta] = respuesta
 
     def mostrar_respuestas(self):
-        for i, valor in enumerate(self.respuestas.values(), start=1):
-            print(f"Pregunta {i}: {valor}")
+        for i, (pregunta, valor) in enumerate(self.respuestas.items(), start=1):
+            print(f"Pregunta {i}: {pregunta}")
+            print(f"Respuesta: {valor}\n")
 
+encuestas={}
 
-##Pruebas de compatibilidad/posible forma de manejar el ingreso de datos
-cantidad=int(input("Ingrese la cantidad de preguntas a ingresar: "))
-
+num_encuesta=int(input("Ingrese el numero de encuestas: "))
 respuesta = register_request()#Instanciamiento de objeto, donde se toma tanto la lista de preguntas como de respuestas
-for i in range(cantidad):
-    si=input(f"Ingrese el pregunta {i+1}: ")
-    respuesta.agregar_question(si)
 
-respuesta.registrar_repuestas()
-respuesta.mostrar_respuestas()
+for i in range(num_encuesta):
+    nombre=input("Ingrese el nombre de la encuesta: ")
+    ##Pruebas de compatibilidad/posible forma de manejar el ingreso de datos
+    cantidad=int(input("Ingrese la cantidad de preguntas a ingresar: "))
+    for i in range(cantidad):
+        variable=input(f"Ingrese la pregunta {i+1}: ")
+        respuesta.agregar_question(variable)
+    encuestas[nombre]=respuesta
+
+
+for (nombre,valor) in encuestas.items():
+    print(f"Encuesta {nombre}: {valor.mostrar_respuestas()}")
