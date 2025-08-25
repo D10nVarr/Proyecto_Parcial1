@@ -17,11 +17,13 @@ class registerRequest(CreateSurvey): #(CreateSurvey)
         self.respuestas={}
 
     def registrar_respuestas(self):
-        print(f"Encuesta {self.nombre}")
-
-        for i, pregunta in enumerate(self.questionList, start=1):
-            respuesta=input(f"{i}. {pregunta}: ")
-            self.respuestas[pregunta] = respuesta
+        if len(self.questionList) == 0:
+            print("Esta encuesta no tiene preguntas para responder.")
+        else:
+            print(f"\nEncuesta {self.nombre}")
+            for i, pregunta in enumerate(self.questionList, start=1):
+                respuesta=input(f"{i}. {pregunta}: ")
+                self.respuestas[pregunta] = respuesta
 
     def mostrar_respuestas(self):
         for i, (pregunta, valor) in enumerate(self.respuestas.items(), start=1):
