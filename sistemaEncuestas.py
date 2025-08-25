@@ -92,6 +92,7 @@ while True:
                     print("Encuesta no encontrada.")
         case "4":
             print("Saliendo...")
+            break
 
         case _:
             print("Opción no válida")
