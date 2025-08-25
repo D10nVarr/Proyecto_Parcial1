@@ -110,11 +110,21 @@ while True:
                 print("Encuestas disponibles:")
                 for nombre in encuestas:  # directamente recorre las claves
                     print(f"- {nombre}")
-                nombre_elegido = input("Ingrese el nombre de la encuesta que desea ver: ").lower()
-                if nombre_elegido in encuestas:
-                    encuestas[nombre_elegido].mostrar_respuestas()
-                else:
-                    print("Encuesta no encontrada.")
+                try:
+                    nombre_elegido = input("Ingrese el nombre de la encuesta que desea ver: ").lower()
+
+                    if nombre_elegido.strip() == "":
+                        raise ValueError("El nombre de la encuesta no puede estar vacío.")
+
+                    if nombre_elegido in encuestas:
+                        encuestas[nombre_elegido].mostrar_respuestas()
+                    else:
+                        print("Encuesta no encontrada.")
+                except ValueError as e:
+                    print(f"Error: {e}")
+                except Exception as e:
+                    print(f"Error inesperado: {e}")
+
         case "4":
             print("Saliendo...")
             break
