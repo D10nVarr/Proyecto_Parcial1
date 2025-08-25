@@ -6,7 +6,10 @@ class CreateSurvey:
         self.questionList =[]
 
     def agregar_question(self, question):
-        self.questionList.append(question)
+        if question != "":
+            self.questionList.append(question)
+        else:
+            print("¡Pregunta vacía! No se puede agregar.")
 
 class registerRequest(CreateSurvey): #(CreateSurvey)
     def __init__(self, nombre):
