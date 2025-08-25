@@ -37,7 +37,7 @@ while True:
     print("\nBienvenido al sistema de Encuestas Dinámicas")
     print("1. Crear una encuesta")
     print("2. Responder una encuesta")
-    print("3. Mostrar respuestas de la encuesta a escojer")
+    print("3. Mostrar respuestas de la encuesta a escoger")
     print("4. Salir")
 
     option=input("Selecciona una opción (1-4): ")
@@ -68,9 +68,14 @@ while True:
                             print("Encuestas registradas.")
 
         case "2":
-            escojer=input("Ingrese el nombre de la encuesta que desee responder: ").lower()
-
-            encuestas[escojer].registrar_respuestas()
+            if len(encuestas) == 0:
+                print("No hay encuestas registradas para responder.")
+            else:
+                escojer=input("Ingrese el nombre de la encuesta que desee responder: ").lower()
+                if escojer in encuestas:
+                    encuestas[escojer].registrar_respuestas()
+                else:
+                    print("Encuesta no encontrada")
 
         case "3":
             if not encuestas:
