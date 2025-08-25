@@ -18,17 +18,18 @@ class registerRequest(CreateSurvey): #(CreateSurvey)
 
     def registrar_respuestas(self):
         if len(self.questionList) == 0:
-            print("Esta encuesta no tiene preguntas para responder.")
+            print("\nEsta encuesta no tiene preguntas para responder.\n")
         else:
-            print(f"\nEncuesta {self.nombre}")
+            print(f"\nEncuesta {self.nombre}\n")
             for i, pregunta in enumerate(self.questionList, start=1):
                 respuesta=input(f"{i}. {pregunta}: ")
                 self.respuestas[pregunta] = respuesta
 
     def mostrar_respuestas(self):
         if len(self.respuestas) == 0:
-            print("No hay respuestas registradas para esta encuesta.")
+            print("\nNo hay respuestas registradas para esta encuesta.\n")
         else:
+            print(f"\nRespuestas de la encuesta {self.nombre}\n:")
             for i, (pregunta, valor) in enumerate(self.respuestas.items(), start=1):
                 print(f"Pregunta {i}: {pregunta}")
                 print(f"Respuesta: {valor}\n")
@@ -46,7 +47,7 @@ while True:
         case "1":
             num_encuesta=int(input("Ingrese el numero de encuestas: "))
             if num_encuesta == 0:
-                print("Número inválido.")
+                print("Número inválido.\n")
             else:
                 num_encuesta = int(num_encuesta)
                 for i in range(num_encuesta):
@@ -58,7 +59,7 @@ while True:
                     else:
                         cantidad = input("Ingrese la cantidad de preguntas a ingresar: ")
                         if not cantidad.isdigit() or int(cantidad) <= 0:
-                            print("Número de preguntas inválido. Debe ser mayor que 0.")
+                            print("\nNúmero de preguntas inválido. Debe ser mayor que 0.\n")
                         else:
                             cantidad = int(cantidad)
                             encuesta = registerRequest(nombre)
@@ -66,30 +67,30 @@ while True:
                                 pregunta = input(f"Ingrese la pregunta {j + 1}: ")
                                 encuesta.agregar_question(pregunta)
                             encuestas[nombre] = encuesta
-                            print("Encuestas registradas.")
+                            print("\nEncuestas registradas.\n")
 
         case "2":
             if len(encuestas) == 0:
-                print("No hay encuestas registradas para responder.")
+                print("\nNo hay encuestas registradas para responder.\n")
             else:
                 escoger=input("Ingrese el nombre de la encuesta que desee responder: ").lower()
                 if escoger in encuestas:
                     encuestas[escoger].registrar_respuestas()
                 else:
-                    print("Encuesta no encontrada")
+                    print("\nEncuesta no encontrada.\n")
 
         case "3":
             if not encuestas:
-                print("No hay encuestas registradas.")
+                print("\nNo hay encuestas registradas.\n")
             else:
                 print("Encuestas disponibles:")
                 for nombre in encuestas:  # directamente recorre las claves
                     print(f"- {nombre}")
-                nombre_elegido = input("Ingrese el nombre de la encuesta que desea ver: ").lower()
+                nombre_elegido = input("\nIngrese el nombre de la encuesta que desea ver: ").lower()
                 if nombre_elegido in encuestas:
                     encuestas[nombre_elegido].mostrar_respuestas()
                 else:
-                    print("Encuesta no encontrada.")
+                    print("\nEncuesta no encontrada.\n")
         case "4":
             print("Saliendo...")
 
