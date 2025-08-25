@@ -26,9 +26,12 @@ class registerRequest(CreateSurvey): #(CreateSurvey)
                 self.respuestas[pregunta] = respuesta
 
     def mostrar_respuestas(self):
-        for i, (pregunta, valor) in enumerate(self.respuestas.items(), start=1):
-            print(f"Pregunta {i}: {pregunta}")
-            print(f"Respuesta: {valor}\n")
+        if len(self.respuestas) == 0:
+            print("No hay respuestas registradas para esta encuesta.")
+        else:
+            for i, (pregunta, valor) in enumerate(self.respuestas.items(), start=1):
+                print(f"Pregunta {i}: {pregunta}")
+                print(f"Respuesta: {valor}\n")
 
 while True:
     print("\nBienvenido al sistema de Encuestas Dinámicas")
