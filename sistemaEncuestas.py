@@ -44,29 +44,38 @@ while True:
 
     match option:
         case "1":
-            num_encuesta=int(input("\nIngrese el numero de encuestas: "))
-            if num_encuesta == 0:
-                print("Número inválido.")
-            else:
-                num_encuesta = int(num_encuesta)
-                for i in range(num_encuesta):
-                    nombre = input("Ingrese el nombre de la encuesta: ").lower()
-                    if nombre.isdigit() or nombre == "":
-                        print("Nombre inválido. Debe contener letras.")
-                    elif nombre in encuestas:
-                        print("El nombre de la encuesta ya existe. No se puede agregar.")
-                    else:
-                        cantidad = input("Ingrese la cantidad de preguntas a ingresar: ")
-                        if not cantidad.isdigit() or int(cantidad) <= 0:
-                            print("Número de preguntas inválido. Debe ser mayor que 0.")
+            try:
+                num_encuesta = int(input("\nIngrese el numero de encuestas: "))
+                if num_encuesta <= 0:
+                    print("Número inválido. Debe ser mayor a cero.")
+                else:
+                    for i in range(num_encuesta):
+                        nombre = input("Ingrese el nombre de la encuesta: ").lower()
+                        if nombre.isdigit() or nombre == "":
+                            print("Nombre inválido. Debe contener letras.")
+                        elif nombre in encuestas:
+                            print("El nombre de la encuesta ya existe. No se puede agregar.")
                         else:
-                            cantidad = int(cantidad)
-                            encuesta = registerRequest(nombre)
-                            for j in range(cantidad):
-                                pregunta = input(f"Ingrese la pregunta {j + 1}: ")
-                                encuesta.agregar_question(pregunta)
-                            encuestas[nombre] = encuesta
-                            print("Encuestas registradas.")
+                            try:
+                                cantidad = input("Ingrese la cantidad de preguntas a ingresar: ")
+                                cantidad = int(cantidad)
+                                if cantidad <= 0:
+                                    print("Número de preguntas inválido. Debe ser mayor que 0.")
+                                else:
+                                    encuesta = registerRequest(nombre)
+                                    for j in range(cantidad):
+                                        pregunta = input(f"Ingrese la pregunta {j + 1}: ")
+                                        encuesta.agregar_question(pregunta)
+                                    encuestas[nombre] = encuesta
+                                    print("Encuestas registradas.")
+                            except ValueError:
+                                print("Error: La cantidad de preguntas debe ser un número entero válido.")
+                            except Exception as e:
+                                print(f"Error inesperado al ingresar la cantidad de preguntas: {e}")
+            except ValueError:
+                print("Error: Debe ingresar un número entero válido para la cantidad de encuestas.")
+            except Exception as e:
+                print(f"Error inesperado al ingresar el número de encuestas: {e}")
 
         case "2":
             if len(encuestas) == 0:
@@ -96,5 +105,3 @@ while True:
 
         case _:
             print("Opción no válida")
-
-
