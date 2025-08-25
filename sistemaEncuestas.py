@@ -72,9 +72,9 @@ while True:
             if len(encuestas) == 0:
                 print("No hay encuestas registradas para responder.")
             else:
-                escojer=input("Ingrese el nombre de la encuesta que desee responder: ").lower()
-                if escojer in encuestas:
-                    encuestas[escojer].registrar_respuestas()
+                escoger=input("Ingrese el nombre de la encuesta que desee responder: ").lower()
+                if escoger in encuestas:
+                    encuestas[escoger].registrar_respuestas()
                 else:
                     print("Encuesta no encontrada")
 
