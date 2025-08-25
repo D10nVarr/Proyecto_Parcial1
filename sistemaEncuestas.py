@@ -22,8 +22,15 @@ class registerRequest(CreateSurvey): #(CreateSurvey)
         else:
             print(f"\nEncuesta {self.nombre}")
             for i, pregunta in enumerate(self.questionList, start=1):
-                respuesta=input(f"{i}. {pregunta}: ")
-                self.respuestas[pregunta] = respuesta
+                try:
+                    respuesta = input(f"{i}. {pregunta}: ")
+                    if respuesta.strip() == "":
+                        raise ValueError("La respuesta no puede estar vacía.")
+                    self.respuestas[pregunta] = respuesta
+                except ValueError as e:
+                    print(f"Error: {e}")
+                except Exception as e:
+                    print(f"Error inesperado: {e}")
 
     def mostrar_respuestas(self):
         if len(self.respuestas) == 0:
