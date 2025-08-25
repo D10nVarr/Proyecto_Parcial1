@@ -1,44 +1,44 @@
-encuestas={}
+surveys = {}
 
 class CreateSurvey:
-    def __init__(self, nombre):
-        self.nombre = nombre
-        self.questionList =[]
+    def __init__(self, survey_name):
+        self.survey_name = survey_name
+        self.question_list = []
 
     def agregar_question(self, question):
         if question != "":
-            self.questionList.append(question)
+            self.question_list.append(question)
         else:
             print("¡Pregunta vacía! No se puede agregar.")
 
-class registerRequest(CreateSurvey): #(CreateSurvey)
-    def __init__(self, nombre):
-        super().__init__(nombre)
-        self.respuestas={}
+class RegisterRequest(CreateSurvey): #(CreateSurvey)
+    def __init__(self, survey_name):
+        super().__init__(survey_name)
+        self.answers = {}
 
     def registrar_respuestas(self):
-        if len(self.questionList) == 0:
+        if len(self.question_list) == 0:
             print("Esta encuesta no tiene preguntas para responder.")
         else:
-            print(f"\nEncuesta {self.nombre}")
-            for i, pregunta in enumerate(self.questionList, start=1):
+            print(f"\nEncuesta {self.survey_name}")
+            for index, question in enumerate(self.question_list, start=1):
                 try:
-                    respuesta = input(f"{i}. {pregunta}: ")
-                    if respuesta.strip() == "":
+                    answer = input(f"{index}. {question}: ")
+                    if answer.strip() == "":
                         raise ValueError("La respuesta no puede estar vacía.")
-                    self.respuestas[pregunta] = respuesta
-                except ValueError as e:
-                    print(f"Error: {e}")
-                except Exception as e:
-                    print(f"Error inesperado: {e}")
+                    self.answers[question] = answer
+                except ValueError as error:
+                    print(f"Error: {error}")
+                except Exception as error:
+                    print(f"Error inesperado: {error}")
 
     def mostrar_respuestas(self):
-        if len(self.respuestas) == 0:
+        if len(self.answers) == 0:
             print("No hay respuestas registradas para esta encuesta.")
         else:
-            for i, (pregunta, valor) in enumerate(self.respuestas.items(), start=1):
-                print(f"Pregunta {i}: {pregunta}")
-                print(f"Respuesta: {valor}\n")
+            for index, (question, value) in enumerate(self.answers.items(), start=1):
+                print(f"Pregunta {index}: {question}")
+                print(f"Respuesta: {value}\n")
 
 while True:
     print("\nBienvenido al sistema de Encuestas Dinámicas")
@@ -47,83 +47,83 @@ while True:
     print("3. Mostrar respuestas de la encuesta a escoger")
     print("4. Salir")
 
-    option=input("Selecciona una opción (1-4): ")
+    option = input("Selecciona una opción (1-4): ")
 
     match option:
         case "1":
             try:
-                num_encuesta = int(input("\nIngrese el numero de encuestas: "))
-                if num_encuesta <= 0:
+                num_survey = int(input("\nIngrese el numero de encuestas: "))
+                if num_survey <= 0:
                     print("Número inválido. Debe ser mayor a cero.")
                 else:
-                    for i in range(num_encuesta):
-                        nombre = input("Ingrese el nombre de la encuesta: ").lower()
-                        if nombre.isdigit() or nombre == "":
+                    for index in range(num_survey):
+                        survey_name = input("Ingrese el nombre de la encuesta: ").lower()
+                        if survey_name.isdigit() or survey_name == "":
                             print("Nombre inválido. Debe contener letras.")
-                        elif nombre in encuestas:
+                        elif survey_name in surveys:
                             print("El nombre de la encuesta ya existe. No se puede agregar.")
                         else:
                             try:
-                                cantidad = input("Ingrese la cantidad de preguntas a ingresar: ")
-                                cantidad = int(cantidad)
-                                if cantidad <= 0:
+                                quantity = input("Ingrese la cantidad de preguntas a ingresar: ")
+                                quantity = int(quantity)
+                                if quantity <= 0:
                                     print("Número de preguntas inválido. Debe ser mayor que 0.")
                                 else:
-                                    encuesta = registerRequest(nombre)
-                                    for j in range(cantidad):
-                                        pregunta = input(f"Ingrese la pregunta {j + 1}: ")
-                                        encuesta.agregar_question(pregunta)
-                                    encuestas[nombre] = encuesta
+                                    survey = RegisterRequest(survey_name)
+                                    for q_index in range(quantity):
+                                        question = input(f"Ingrese la pregunta {q_index + 1}: ")
+                                        survey.agregar_question(question)
+                                    surveys[survey_name] = survey
                                     print("Encuestas registradas.")
                             except ValueError:
                                 print("Error: La cantidad de preguntas debe ser un número entero válido.")
-                            except Exception as e:
-                                print(f"Error inesperado al ingresar la cantidad de preguntas: {e}")
+                            except Exception as error:
+                                print(f"Error inesperado al ingresar la cantidad de preguntas: {error}")
             except ValueError:
                 print("Error: Debe ingresar un número entero válido para la cantidad de encuestas.")
-            except Exception as e:
-                print(f"Error inesperado al ingresar el número de encuestas: {e}")
+            except Exception as error:
+                print(f"Error inesperado al ingresar el número de encuestas: {error}")
 
         case "2":
-            if len(encuestas) == 0:
+            if len(surveys) == 0:
                 print("No hay encuestas registradas para responder.")
             else:
                 try:
-                    escoger = input("Ingrese el nombre de la encuesta que desee responder: ").lower()
+                    choose = input("Ingrese el nombre de la encuesta que desee responder: ").lower()
 
-                    if escoger.strip() == "":
+                    if choose.strip() == "":
                         raise ValueError("El nombre de la encuesta no puede estar vacío.")
 
-                    if escoger in encuestas:
-                        encuestas[escoger].registrar_respuestas()
+                    if choose in surveys:
+                        surveys[choose].registrar_respuestas()
                     else:
                         print("Encuesta no encontrada.")
-                except ValueError as e:
-                    print(f"Error: {e}")
-                except Exception as e:
-                    print(f"Error inesperado: {e}")
+                except ValueError as error:
+                    print(f"Error: {error}")
+                except Exception as error:
+                    print(f"Error inesperado: {error}")
 
         case "3":
-            if not encuestas:
+            if not surveys:
                 print("No hay encuestas registradas.")
             else:
                 print("Encuestas disponibles:")
-                for nombre in encuestas:  # directamente recorre las claves
-                    print(f"- {nombre}")
+                for survey_name in surveys:  # directamente recorre las claves
+                    print(f"- {survey_name}")
                 try:
-                    nombre_elegido = input("Ingrese el nombre de la encuesta que desea ver: ").lower()
+                    chosen_name = input("Ingrese el nombre de la encuesta que desea ver: ").lower()
 
-                    if nombre_elegido.strip() == "":
+                    if chosen_name.strip() == "":
                         raise ValueError("El nombre de la encuesta no puede estar vacío.")
 
-                    if nombre_elegido in encuestas:
-                        encuestas[nombre_elegido].mostrar_respuestas()
+                    if chosen_name in surveys:
+                        surveys[chosen_name].mostrar_respuestas()
                     else:
                         print("Encuesta no encontrada.")
-                except ValueError as e:
-                    print(f"Error: {e}")
-                except Exception as e:
-                    print(f"Error inesperado: {e}")
+                except ValueError as error:
+                    print(f"Error: {error}")
+                except Exception as error:
+                    print(f"Error inesperado: {error}")
 
         case "4":
             print("Saliendo...")
