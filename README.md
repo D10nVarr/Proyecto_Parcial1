@@ -12,3 +12,11 @@ Misma clase hace que cada pregunta sea guardada dentro del diccionario en dodne 
 
 A traves de una funcion while, se hace un menú que permitirá al usuario escoger la acción a realizar, donde a traves del método "mostrar_respuestas", que está dentro de la clase registerRequests,
 el usuario podrá mostrar las preguntas y sus respuestas.
+
+Roles:
+Líder técnico / Desarrollador principal: Diego Barrios
+Co-desarrollador principal: Melqui Monterroso
+Desarrodadores: Manuel Coxaj, Melqui Monterroso, Jose Noguera, Marvin Antonio
+Responsable de pruebas y manejo de errores: Marvin Antonio
+Encargado de interfaz de usuario y flujo: Manuel Coxaj
+Gestor de documentación y repositorio: Jose Noguera
