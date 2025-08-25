@@ -47,13 +47,14 @@ while True:
             num_encuesta=int(input("Ingrese el numero de encuestas: "))
             if num_encuesta == 0:
                 print("Número inválido.")
-
             else:
                 num_encuesta = int(num_encuesta)
                 for i in range(num_encuesta):
                     nombre = input("Ingrese el nombre de la encuesta: ").lower()
                     if nombre.isdigit() or nombre == "":
                         print("Nombre inválido. Debe contener letras.")
+                    elif nombre in encuestas:
+                        print("El nombre de la encuesta ya existe. No se puede agregar.")
                     else:
                         cantidad = input("Ingrese la cantidad de preguntas a ingresar: ")
                         if not cantidad.isdigit() or int(cantidad) <= 0:
